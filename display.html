@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="صفحة تأكيد تسجيل البيانات.">
+    <title>تأكيد تسجيل البيانات</title>
+    <link rel="stylesheet" href="wifi2.css">
+    <style>
+        /* تنسيق الدائرة */
+        .menu-circle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s;
+            display: none;
+            /* إخفاء الدائرة بشكل افتراضي */
+        }
+
+        .menu-circle:hover {
+            background-color: #2980b9;
+        }
+
+        /* تنسيق الرسالة */
+        .confirmation-message {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f0ad4e;
+            color: white;
+            border-radius: 5px;
+        }
+
+        /* خيارات الإرسال */
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .options button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #22bb14;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .options button:hover {
+            background-color: #2980b9;
+        }
+
+        /* تنسيق الشعار */
+        .logo {
+            display: block;
+            margin: 0px auto;
+            width: 80px;
+            height: auto;
+        }
+
+        /* تنسيق زر فيسبوك */
+        .facebook-button {
+            background-color: #3b5998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .facebook-button:hover {
+            background-color: #2e478a;
+        }
+
+        .facebook-icon {
+            width: 20px;
+            height: 20px;
+            margin-left: 5px;
+        }
+
+        /* تنسيق قائمة الروابط */
+        .submenu {
+            display: none;
+            /* إخفاء القائمة بشكل افتراضي */
+            position: fixed;
+            top: 70px;
+            /* تغيير الموضع حسب الحاجة */
+            right: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            z-index: 1001;
+            /* وضعها فوق العناصر الأخرى */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .submenu a {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .submenu a:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <!-- شعار Wi-Fi -->
+        <img src="logo.png" alt="شعار Wi-Fi" class="logo">
+        <h1>تم بنجاح بدء ألهجوم ألآن</h1>
+        <hr>
+ <!-- إضافة فقرة جديدة لعرض الإحداثيات الوهمية -->
+ <p id="fake-coordinates">إحداثيات الموقع: </p>
+  <!-- إضافة فقرة لعرض الدولة والعلم -->
+  <p id="user-location">جاري تحديد موقعك...</p>
+    </header>
+
+   
+
+    <div class="options">
+        <button class="facebook-button" onclick="sendToFacebook()">
+            <span>إرسال عبر فيسبوك</span>
+            <img src="facebook.png" alt="فيسبوك" class="facebook-icon">
+        </button>
+        <button class="facebook-button" onclick="sendTogoogle()">
+            <span>إرسال عبر فيسبوك</span>
+            <img src="google.png" alt="فيسبوك" class="facebook-icon">
+        </button>
+        <button class="facebook-button" onclick="sendToTwitter()">
+            <span>إرسال عبر فيسبوك</span>
+            <img src="twitterx.png" alt="فيسبوك" class="facebook-icon">
+        </button>
+    </div>
+
+    <!-- دائرة القائمة -->
+    <div class="menu-circle" id="menu-circle">☰</div>
+
+    <!-- قائمة الروابط الفرعية -->
+    <div class="submenu" id="submenu">
+        <a href="#link1">الرابط الفرعي 1</a>
+        <a href="#link2">الرابط الفرعي 2</a>
+        <a href="#link3">الرابط الفرعي 3</a>
+    </div>
+
+    <footer>
+        <p>تواصل معنا للحصول على المزيد من المعلومات عن موقع Wi-Fi.</p>
+        <p>&copy; 2024 جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script>
+
+
+        // إظهار وإخفاء القائمة عند الضغط على الدائرة
+        const menuCircle = document.getElementById('menu-circle');
+        const submenu = document.getElementById('submenu');
+
+        menuCircle.addEventListener('click', function () {
+            if (submenu.style.display === 'block') {
+                submenu.style.display = 'none'; // إخفاء القائمة إذا كانت ظاهرة
+            } else {
+                submenu.style.display = 'block'; // إظهار القائمة إذا كانت مخفية
+            }
+        });
+
+        // متغير لتتبع موقع التمرير
+        let lastScrollTop = 0;
+
+        // حدث التمرير
+        window.addEventListener('scroll', function () {
+            let st = window.pageYOffset || document.documentElement.scrollTop; // موقع التمرير الحالي
+
+            // إظهار دائرة القائمة إذا كانت في الجزء العلوي
+            if (st <= 0) {
+                menuCircle.style.display = 'flex';
+            } else {
+                menuCircle.style.display = 'none';
+                submenu.style.display = 'none'; // إخفاء القائمة عند التمرير
+            }
+
+            lastScrollTop = st <= 0 ? 0 : st; // تحديث موقع التمرير
+        });
+        function sendToFacebook() {
+            window.location.href = "https://www.facebook.com"; // استبدل هذا الرابط بالرابط المطلوب
+        }
+        function sendTogoogle() {
+            window.location.href = "https://www.google.com"; // استبدل هذا الرابط بالرابط المطلوب
+        }
+        function sendToTwitter() {
+            window.location.href = "https://www.x.com"; // استبدل هذا الرابط بالرابط المطلوب
+        }
+  // توليد إحداثيات موقع وهمية
+  function generateFakeCoordinates() {
+        const latitude = (Math.random() * 180 - 90).toFixed(6);  // توليد خط العرض
+        const longitude = (Math.random() * 360 - 180).toFixed(6);  // توليد خط الطول
+        return `خط العرض: ${latitude}, خط الطول: ${longitude}`;
+    }
+
+    // عرض الإحداثيات الوهمية في الفقرة
+    document.getElementById('fake-coordinates').textContent += generateFakeCoordinates();
+
+     // الحصول على معلومات الدولة باستخدام API خارجي
+     function fetchUserLocation() {
+        fetch('https://ipinfo.io?token=YOUR_API_TOKEN')  // استبدل YOUR_API_TOKEN بالرمز الخاص بك من ipinfo.io
+            .then(response => response.json())
+            .then(data => {
+                const country = data.country;
+                const countryName = data.city;
+                const flagUrl = `https://flagcdn.com/48x36/${country.toLowerCase()}.png`;
+
+                // عرض الدولة والعلم في الفقرة
+                const userLocationElement = document.getElementById('user-location');
+                userLocationElement.innerHTML = `دولتك: ${countryName} <img src="${flagUrl}" alt="علم ${country}" />`;
+            })
+            .catch(error => {
+                console.error('Error fetching location:', error);
+                document.getElementById('user-location').textContent = 'تعذر تحديد موقعك.';
+            });
+    }
+
+    // استدعاء الدالة للحصول على موقع المستخدم
+    fetchUserLocation();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="صفحة حول بيانات شبكة Wi-Fi.">
+    <title>بيانات شبكة Wi-Fi</title>
+    <!-- ربط ملف CSS -->
+    <link rel="stylesheet" href="wifi2.css">
+    <style>
+        /* تنسيق الدائرة */
+        .menu-circle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s;
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+
+        .menu-circle:hover {
+            background-color: #2980b9;
+        }
+
+        /* تنسيق القائمة الفرعية */
+        .dropdown-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            right: 10px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+        }
+
+        .dropdown-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .dropdown-menu ul li {
+            margin: 5px 0;
+        }
+
+        .dropdown-menu ul li a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .menu-circle {
+            transition: opacity 0.3s, pointer-events 0.3s;
+        }
+
+
+        /* تنسيق الزر */
+        .header-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #22bb14;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        .header-button:hover {
+            background-color: #2980b9;
+        }
+
+        /* تنسيق النموذج */
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        button[type="submit"] {
+            display: block;
+            margin: 20px auto;
+            /* هذا السطر يقوم بتوسيط الزر أفقياً */
+            padding: 10px 20px;
+            background-color: #22bb14;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+
+        form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        form input,
+        form select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        /* تنسيق رسالة الهجوم */
+        .attack-message {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0ad4e;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        /* رسائل إرشادية */
+        small {
+            display: block;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        /* تنسيق شروط الاستخدام */
+        .terms-container {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f1f1f1;
+            margin-bottom: 15px;
+        }
+
+        .terms {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* محاذاة بين الصندوق والنص */
+        }
+
+        .terms input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .terms label {
+            margin-left: 10px;
+            flex: 1;
+            /* يسمح بتوسيع النص المتبقي */
+        }
+
+        .terms-container a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .terms-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <!-- شعار Wi-Fi -->
+        <img src="logo.png" alt="شعار Wi-Fi" class="logo">
+        <h1>بيانات شبكة Wi-Fi</h1>
+        <p class="header-description">اكتشف معلومات هامة حول إعدادات شبكة الواي فاي.</p>
+        <button class="header-button" onclick="window.location.href='https://www.google.com'">تعرف على المزيد</button>
+        <!-- إضافة فقرة لعرض الدولة والعلم -->
+  <p id="user-location">جاري تحديد موقعك...</p>
+    </header>
+
+    <!-- دائرة القائمة -->
+    <div class="menu-circle" id="menu-circle">☰</div>
+
+    <!-- القائمة الفرعية -->
+    <div class="dropdown-menu" id="dropdown-menu">
+        <ul>
+            <li><a href="wifi.html#about">عن Wi-Fi</a></li>
+            <li><a href="wifi.html#advantages">مميزات Wi-Fi</a></li>
+            <li><a href="wifi.html#security">الأمان</a></li>
+            <li><a href="wifi.html#contact">تواصل معنا</a></li>
+        </ul>
+    </div>
+
+    <form id="data-form">
+        <h2>أدخل معلومات ألشبكة Wi-Fi</h2>
+
+        <label for="wifi-name">Wi-Fi أسم شبكة</label>
+        <input type="text" id="wifi-name" name="wifi-name" required>
+        <small>أدخل اسم الشبكة المعروف لديك (SSID).</small>
+
+        <label for="security-type">نوع الحماية:</label>
+        <select id="security-type" name="security-type" required>
+            <option value="WPA2">WPA2</option>
+            <option value="WPA">WPA</option>
+            <option value="WEP">WEP</option>
+            <option value="لا يوجد">لا يوجد</option>
+        </select>
+        <small>اختر نوع الحماية المطبق على الشبكة.</small>
+
+        <label>هل الشبكة مخفية؟</label>
+        <select id="hidden-network" name="hidden-network" required>
+            <option value="نعم">نعم</option>
+            <option value="لا">لا</option>
+        </select>
+        <small>حدد ما إذا كانت الشبكة مخفية عن الأجهزة المحيطة.</small>
+
+        <label>قوة الشبكة:</label>
+        <select id="signal-strength" name="signal-strength" required>
+            <option value="ضعيفة">ضعيفة</option>
+            <option value="متوسطة">متوسطة</option>
+            <option value="قوية">قوية</option>
+        </select>
+        <small>حدد مدى قوة إشارة الشبكة في الموقع الحالي.</small>
+
+        <label>نوع الهجوم:</label>
+        <select id="attack-type" name="attack-type" required onchange="showMessage()">
+            <option value="">اختيار نوع الهجوم</option>
+            <option value="جميع الهجمات">جميع الهجمات</option>
+            <option value="Brute-force">Brute-force</option>
+            <option value="Phishing">Phishing</option>
+            <option value="Pre-Shared Key">Pre-Shared Key</option>
+            <option value="Man-in-the-middle">Man-in-the-middle</option>
+            <option value="WPA/WPA2 PSK (Pre-Shared Key)">WPA/WPA2 PSK (Pre-Shared Key)</option>
+            <option value="Evil Twin">Evil Twin</option>
+            <option value="WPS (Wi-Fi Protected Setup)">WPS (Wi-Fi Protected Setup)</option>
+            <option value="Deauthentication">Deauthentication</option>
+            <option value="Man-in-the-Middle (MitM)">Man-in-the-Middle (MitM)</option>
+            <option value="Packet Sniffing">Packet Sniffing</option>
+            <option value="ARP Spoofing">ARP Spoofing</option>
+            <option value="Krack (Key Reinstallation Attack)">Krack (Key Reinstallation Attack)</option>
+            <option value="Rogue Access Point">Rogue Access Point</option>
+            <option value="Jamming">Jamming</option>
+
+
+        </select>
+        <small>اختر نوع الهجوم الذي ترغب فيه على الشبكة.</small>
+
+        <div class="attack-message" id="attack-message"></div>
+        <h3>ادخل العنوان</h3>
+
+        <label for="country">البلد:</label>
+        <select id="country" name="country" required>
+            <option value="مصر">مصر</option>
+            <option value="السعودية">السعودية</option>
+            <option value="الأردن">الأردن</option>
+            <option value="الإمارات">الإمارات</option>
+        </select>
+        <small>اختر البلد الذي.</small>
+
+
+        <label for="region">المحافظة:</label>
+        <input type="text" id="region" name="region" required>
+        <small>أدخل المحافظة.</small>
+
+        <label for="city">المدينة:</label>
+        <input type="text" id="city" name="city" required>
+        <small>أدخل المدينة الحالية.</small>
+
+        <label for="street">الشارع: أو ألمنطقه</label>
+        <input type="text" id="street" name="street" required>
+        <small>أدخل اسم الشارع الذي تتواجد فيه.</small>
+
+        <div class="terms-container">
+            <div class="terms">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">أوافق على <a href="#">شروط الاستخدام</a></label>
+            </div>
+        </div>
+
+        <div class="terms-container">
+            <div class="terms">
+                <input type="checkbox" id="disclaimer" name="disclaimer" required>
+                <label for="disclaimer">أوافق على أن الموقع غير مسئول عن أي سوء استخدام.</label>
+            </div>
+        </div>
+
+
+        <button type="submit">إرسال المعلومات</button>
+    </form>
+
+
+    <footer>
+
+        <p id="contact">تواصل معنا للحصول على المزيد من المعلومات عن ألموقع Wi-Fi.</p>
+        <!-- حقوق الطبع والنشر -->
+        <p>&copy; 2024 جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script>
+        let lastScrollTop = 0;
+        const menuCircle = document.getElementById('menu-circle');
+        const header = document.querySelector('header');
+
+        window.addEventListener('scroll', function () {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop > lastScrollTop) {
+                // إخفاء القائمة عند التمرير للأسفل
+                menuCircle.style.opacity = '0';
+                menuCircle.style.pointerEvents = 'none'; // تعطيل التفاعل مع الزر
+            } else {
+                // إظهار القائمة عند التمرير للأعلى أو عند الوصول إلى الـ header
+                if (scrollTop <= header.offsetHeight) {
+                    menuCircle.style.opacity = '1';
+                    menuCircle.style.pointerEvents = 'auto'; // إعادة تفعيل التفاعل مع الزر
+                }
+            }
+            lastScrollTop = scrollTop;
+        });
+
+        const dropdownMenu = document.getElementById('dropdown-menu');
+
+        menuCircle.addEventListener('click', function () {
+            // تبديل بين إظهار وإخفاء القائمة
+            if (dropdownMenu.style.display === 'none' || dropdownMenu.style.display === '') {
+                dropdownMenu.style.display = 'block';
+            } else {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+
+
+
+
+       
+        // إظهار رسالة الهجوم
+        function showMessage() {
+            const attackMessage = document.getElementById('attack-message');
+            const attackType = document.getElementById('attack-type').value;
+
+            switch (attackType) {
+                case 'جميع الهجمات':
+                    attackMessage.innerText = 'استخدام جميع الهجمات.';
+                    break;
+                case 'Brute-force':
+                    attackMessage.innerText = ' Brute-force يتطلب الكثير من الوقت.';
+                    break;
+                case 'Phishing':
+                    attackMessage.innerText = ' Phishing يحاول سرقة معلومات المستخدم.';
+                    break;
+                    case 'Pre-Shared Key':
+                    attackMessage.innerText = 'مراقبة الشبكه وسرقة مفتاح التشفير:.';
+                    break;
+                case 'Deauthentication':
+                    attackMessage.innerText = ' Deauthentication يعني قطع الاتصال.';
+                    break;
+                case 'Man-in-the-middle':
+                    attackMessage.innerText = ' Man-in-the-middle يمكن أن يؤدي إلى سرقة البيانات.';
+                    break;
+                case 'WPA/WPA2 PSK (Pre-Shared Key)':
+                    attackMessage.innerText = ' WPA/WPA2 PSK (Pre-Shared Key) يستهدف كلمة المرور.';
+                    break;
+                case 'Evil Twin':
+                    attackMessage.innerText = ' Evil Twin يمثل نقطة وصول مزيفة.';
+                    break;
+                case 'WPS (Wi-Fi Protected Setup)':
+                    attackMessage.innerText = ' WPS يستهدف عملية الإعداد السهلة.';
+                    break;
+                    case 'Man-in-the-Middle (MitM)':
+                    attackMessage.innerText = ' يتيح للهاكر مراقبة وتعديل الاتصالات بين المستخدم والشبكة، مما يمكنه من سرقة البيانات';
+                    break;
+                case 'Packet Sniffing':
+                    attackMessage.innerText = ' Packet Sniffing يتضمن استراق السمع على الشبكة.';
+                    break;
+                case 'ARP Spoofing':
+                    attackMessage.innerText = ' ARP Spoofing يمكن أن يؤثر على التوجيه في الشبكة.';
+                    break;
+                case 'Krack (Key Reinstallation Attack)':
+                    attackMessage.innerText = ' Krack يستهدف إعادة تثبيت المفاتيح.';
+                    break;
+                case 'Rogue Access Point':
+                    attackMessage.innerText = ' Rogue Access Point يمثل نقطة وصول غير مصرح بها.';
+                    break;
+                case 'Jamming':
+                    attackMessage.innerText = ' Jamming يعني التشويش على الإشارة.';
+                    break;
+                default:
+                    attackMessage.innerText = '';
+                    break;
+            }
+
+            attackMessage.style.display = attackMessage.innerText ? 'block' : 'none';
+        }
+
+        // إخفاء رسالة الهجوم عند تحميل الصفحة
+        window.onload = function() {
+            showMessage(); // Call showMessage initially to set the default message.
+                    attackMessage.innerText = '';
+            }
+            attackMessage.style.display = attackMessage.innerText ? 'block' : 'none';
+        
+
+        // منع إعادة تحميل الصفحة عند تقديم النموذج
+        document.getElementById('data-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            alert('تم إرسال المعلومات بنجاح!');
+        });
+
+     // الحصول على معلومات الدولة باستخدام API خارجي
+     function fetchUserLocation() {
+        fetch('https://ipinfo.io?token=YOUR_API_TOKEN')  // استبدل YOUR_API_TOKEN بالرمز الخاص بك من ipinfo.io
+            .then(response => response.json())
+            .then(data => {
+                const country = data.country;
+                const countryName = data.city;
+                const flagUrl = `https://flagcdn.com/48x36/${country.toLowerCase()}.png`;
+
+                // عرض الدولة والعلم في الفقرة
+                const userLocationElement = document.getElementById('user-location');
+                userLocationElement.innerHTML = `دولتك: ${countryName} <img src="${flagUrl}" alt="علم ${country}" />`;
+            })
+            .catch(error => {
+                console.error('Error fetching location:', error);
+                document.getElementById('user-location').textContent = 'تعذر تحديد موقعك.';
+            });
+    }
+
+    // استدعاء الدالة للحصول على موقع المستخدم
+    fetchUserLocation();
+    </script>
+</body>
+
+</html>

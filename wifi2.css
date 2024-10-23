@@ -1,0 +1,104 @@
+/* تعيين التنسيق الأساسي */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* تصميم الرأس */
+header {
+    background-color: #3498db;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+}
+
+/* الشعار - يمكنك تغيير حجمه هنا */
+.logo {
+    width: 350px; /* هذا الحجم يمكن تغييره لأي قيمة تريدها */
+    height: auto;
+    display: block;
+    margin: 0 auto; /* لمركزة الشعار في الصفحة */
+}
+
+/* باقي التنسيقات نفسها كما هي */
+
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+/* تصميم الأقسام */
+section {
+    padding: 20px;
+    margin: 20px;
+}
+
+/* تلوين الخلفية للقسمين */
+#about, #advantages, #security {
+    background-color: #ecf0f1;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* تصميم الزر */
+button {
+    background-color: #2ecc71;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #27ae60;
+}
+
+/* تصميم الفوتر */
+footer {
+    background-color: #3498db;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* وسائل الإعلام لجعل الصفحة متجاوبة */
+@media (max-width: 768px) {
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+    section {
+        margin: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5em;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+
+    .logo {
+        width: 80px; /* حجم أصغر للشعار عند الشاشات الصغيرة */
+    }
+}

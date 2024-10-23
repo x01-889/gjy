@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="صفحة حول تقنية Wi-Fi ومميزاتها.">
+    <title>Wi-Fi</title>
+    <!-- ربط ملف CSS -->
+    <link rel="stylesheet" href="wifi2.css">
+    <style>
+        /* تنسيق الدائرة */
+        .menu-circle {
+            position: fixed; /* لتثبيته في المكان */
+            top: 10px; /* ارتفاع عن الحافة العلوية */
+            right: 10px; /* بعد عن الحافة اليمنى */
+            background-color: #3498db; /* لون الخلفية */
+            border-radius: 50%; /* شكل دائري */
+            width: 50px; /* عرض الدائرة */
+            height: 50px; /* ارتفاع الدائرة */
+            display: flex; /* محاذاة المحتوى في المنتصف */
+            align-items: center; /* محاذاة عمودية */
+            justify-content: center; /* محاذاة أفقية */
+            color: white; /* لون النص */
+            font-size: 1.5em; /* حجم الخط */
+            cursor: pointer; /* تغيير المؤشر عند التمرير فوقه */
+            z-index: 1000; /* لجعلها فوق العناصر الأخرى */
+            transition: background-color 0.3s; /* تأثير تغيير اللون */
+            opacity: 1; /* للشفافية */
+            transition: opacity 0.3s; /* تأثير الشفافية */
+        }
+
+        .menu-circle:hover {
+            background-color: #2980b9; /* لون عند التمرير فوقه */
+        }
+
+        /* تنسيق القائمة الفرعية */
+        .dropdown-menu {
+            display: none; /* إخفاء القائمة بشكل افتراضي */
+            position: fixed; /* لتثبيتها في المكان */
+            top: 70px; /* بعد عن الدائرة */
+            right: 10px; /* بعد عن الحافة اليمنى */
+            background-color: #ecf0f1; /* لون الخلفية للقائمة */
+            border-radius: 8px; /* زوايا مدورة */
+            padding: 10px; /* مسافة داخلية */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* ظل */
+            z-index: 999; /* أقل من الدائرة */
+        }
+
+        .dropdown-menu ul {
+            list-style: none; /* إلغاء النقاط */
+            padding: 0; /* إلغاء الحشو */
+            margin: 0; /* إلغاء الهوامش */
+        }
+
+        .dropdown-menu ul li {
+            margin: 5px 0; /* مسافة بين العناصر */
+        }
+
+        .dropdown-menu ul li a {
+            color: #333; /* لون النص */
+            text-decoration: none; /* إزالة التسطير */
+        }
+
+        /* تنسيق الزر */
+        .header-button {
+            display: block; /* يجعل الزر عنصر كتلة */
+            margin: 20px auto; /* توسيط الزر */
+            padding: 10px 20px; /* مسافة داخلية */
+            background-color: #22bb14; /* لون الزر */
+            color: white; /* لون النص */
+            border: none; /* إزالة الحدود */
+            border-radius: 5px; /* زوايا مدورة */
+            cursor: pointer; /* تغيير المؤشر عند التمرير فوقه */
+            font-size: 1em; /* حجم الخط */
+            transition: background-color 0.3s; /* تأثير تغيير اللون */
+        }
+
+        .header-button:hover {
+            background-color: #2980b9; /* لون عند التمرير فوقه */
+        }
+
+        /* تنسيق القسم ليكون في المنتصف */
+        section {
+            text-align: center; /* توسيط النص */
+            margin: 10px 0; /* مسافة حول القسم */
+        }
+
+        /* تنسيق الفقرة الجديدة */
+        .header-description {
+            color: #555; /* لون النص */
+            font-size: 1em; /* حجم الخط */
+            margin-top: 10px; /* مسافة أعلى الفقرة */
+        }
+           /* تنسيق الـheader */
+           header {
+            text-align: center;
+            background-color: #3498db;
+            padding: 20px;
+            color: white;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        header nav {
+            margin-top: 10px;
+        }
+
+        /* قائمة الروابط الفرعية */
+        header nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        header nav ul li {
+            margin: 0 10px; /* التحكم في المسافة بين الروابط */
+        }
+
+        /* تصغير حجم العناوين الفرعية */
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em; /* حجم النص صغير */
+            transition: color 0.3s;
+        }
+
+        header nav ul li a:hover {
+            color: #ecf0f1;
+        }
+
+        /* تنسيق الزر في الـheader */
+        .header-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #22bb14;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        .header-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+
+        <!-- شعار Wi-Fi -->
+        <img src="logo.png" alt="شعار Wi-Fi" class="logo">
+        <h1>كل ما تحتاج معرفته عن الـ Wi-Fi</h1>
+        <!-- فقرة جديدة -->
+        <nav>
+            <ul>
+                <li><a href="page1.html">الصفحة الأولى</a></li>
+                <li><a href="page2.html">الصفحة الثانية</a></li>
+                <li><a href="page3.html">الصفحة الثالثة</a></li>
+            </ul>
+        </nav> 
+        
+    </header>
+
+    <!-- دائرة القائمة -->
+    <div class="menu-circle" id="menu-circle">☰</div>
+    
+    <!-- القائمة الفرعية -->
+    <div class="dropdown-menu" id="dropdown-menu">
+        <ul>
+            <li><a href="#about">عن Wi-Fi</a></li>
+            <li><a href="#advantages">مميزات Wi-Fi</a></li>
+            <li><a href="#security">الأمان</a></li>
+            <li><a href="#contact">تواصل معنا</a></li>
+        </ul>
+    </div>
+    <section id="about">
+
+    <p class="header-description">تعرف على أحدث التقنيات والتوجهات في عالم الاتصالات اللاسلكية.</p>
+    <!-- زر في أسفل الـ header مع رابط -->
+    <button class="header-button" onclick="window.location.href='https://www.google.com'">تعرف على المزيد</button>
+</section>
+
+    <section id="about">
+        <h2>ما هو الـ Wi-Fi؟</h2>
+        <p>الـ Wi-Fi هو تقنية لاسلكية تُستخدم لتوصيل الأجهزة بالإنترنت بدون الحاجة إلى أسلاك.</p>
+        <!-- زر "تعرف على المزيد" -->
+        <button id="learn-more-btn" class="header-button">تعرف على المزيد</button>
+    </section>
+
+    <footer>
+        <nav>
+            <ul>
+                <li><a href="#about">عن Wi-Fi</a></li>
+                <li><a href="#advantages">مميزات Wi-Fi</a></li>
+                <li><a href="#security">الأمان</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
+            </ul>
+        </nav>
+        <p id="contact">تواصل معنا للحصول على المزيد من المعلومات عن Wi-Fi.</p>
+        <!-- حقوق الطبع والنشر -->
+        <p>&copy; 2024 جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <!-- ربط ملف JavaScript -->
+    <script src="wifi2.js"></script>
+    <script>
+        // إظهار وإخفاء القائمة الفرعية عند النقر على الدائرة
+        document.getElementById('menu-circle').addEventListener('click', function() {
+            var dropdown = document.getElementById('dropdown-menu');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block'; // إظهار القائمة
+            } else {
+                dropdown.style.display = 'none'; // إخفاء القائمة
+            }
+        });
+
+        // إخفاء وإظهار أيقونة القائمة عند التمرير
+        let lastScrollTop = 0;
+        const menuCircle = document.getElementById('menu-circle');
+
+        window.addEventListener('scroll', function() {
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (currentScroll > lastScrollTop) {
+                // عند النزول، إخفاء الدائرة
+                menuCircle.style.opacity = '0';
+            } else {
+                // عند الصعود، إظهار الدائرة
+                menuCircle.style.opacity = '1';
+            }
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // تحديث آخر موضع
+        });
+    
+
+
+// استدعاء الدالة عند تحميل الصفحة
+window.onload = getLocationByIP;
+    </script>
+</body>
+</html>
